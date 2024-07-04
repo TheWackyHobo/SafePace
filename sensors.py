@@ -15,10 +15,10 @@ def read_distance(bus, sensor_address):
     try:
         # Write the command to initiate ranging in inches
         bus.write_byte_data(sensor_address, command_reg, 0x50)
-        time.sleep(0.100)
+        time.sleep(0.120)
         high_byte = bus.read_byte_data(sensor_address, distance_high_reg)
         low_byte = bus.read_byte_data(sensor_address, distance_low_reg)
-        print(f"{hex(high_byte)}: {hex(low_byte)}")
+        #print(f"{hex(high_byte)}: {hex(low_byte)}")
         # Combine the bytes into a single 16-bit value
         distance_raw = (high_byte << 8) + low_byte
         distance_in = float(distance_raw)
@@ -30,9 +30,9 @@ def read_distance(bus, sensor_address):
 with smbus2.SMBus(i2c_bus_number) as bus:
     while True:
         distance = read_distance(bus, left) 
- #       if distance < 84:
-        print(f"Sensor at {hex(left)}: {distance:.2f} inches")
-#            motor(distance)
+        if distance < 84:
+            print(f"Sensor at {hex(left)}: {distance:.2f} inches")
+            motor(distance)
         if distance is not None:
             #print(f"Sensor at {hex(left)}: {distance:.2f} inches")
             continue

@@ -18,11 +18,11 @@ def motor(distance):
     # pwm control
     pwm.start(dutyCycle)  # start(duty_cycle)
     print("Running PWM at:"+str(dutyCycle))
-    time.sleep(1)
+    time.sleep(1.5)
     #pwm.stop()
     #print("Stopping PWM output")
     GPIO.cleanup()
 
-#distance = 75
+#distance = 20
 #motor(distance)
 
