@@ -1,0 +1,40 @@
+import serial
+import pynmea2
+import time
+
+# Open GPS serial connection
+gps = serial.Serial("/dev/serial0", baudrate=9600, timeout=1)
+
+def get_gps_data():
+    """ Read and parse GPS data using pynmea2. """
+    while True:
+        try:
+            line = gps.readline().decode('utf-8', errors='ignore').strip()
+            print(f"Raw NMEA Data: {line}")  # Debugging output
+           
+            if line.startswith("$GPGGA"):  # Only parse GGA sentences
+                msg = pynmea2.parse(line)
+                if msg.latitude and msg.longitude:
+                    print(f"Fix acquired! Data: {line}")  # Confirm parsed fix
+                    return msg.latitude, msg.longitude
+        except (pynmea2.ParseError, UnicodeDecodeError) as e:
+            print(f"Parsing error: {e}")  # Show errors for debugging
+            continue  # Ignore errors and keep reading
+   
+    return None, None  # If no valid data is found
+
+def main():
+    print("Reading GPS data...")
+
+    for _ in range(5):  # Try 5 times
+        latitude, longitude = get_gps_data()
+        if latitude is not None and longitude is not None:
+            print(f"Latitude: {latitude}, Longitude: {longitude}")
+        else:
+            print("Waiting for GPS fix...")
+        time.sleep(2)
+
+    print("Finished reading GPS data.")
+
+if __name__ == "__main__":
+    main()
