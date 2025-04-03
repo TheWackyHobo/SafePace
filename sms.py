@@ -2,11 +2,13 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def send_email(message, recipient_email, sender_email, sender_password):
+def send_email(message, recipient_email):
     # Set up the SMTP server (using Gmail's SMTP server as an example)
     smtp_server = "smtp.gmail.com"
     smtp_port = 587  # Gmail uses port 587 with TLS
 
+    sender_email = "safe.pac3@gmail.com" 
+    sender_password = "vpqo hufr cetl bord"
     # Set up the MIME (Multipurpose Internet Mail Extensions)
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -39,10 +41,11 @@ recipient_email = "keegan.pham@slu.edu"  # Replace with the recipient's email ad
 message = "SafePace test"
 sender_email = "safe.pac3@gmail.com"  # Replace with your Gmail address
 sender_password = "vpqo hufr cetl bord"  # Replace with your Gmail app password (if 2FA enabled)
-send_email(message, recipient_email, sender_email, sender_password)
-
 gmail sign in info
 safe.pac3@gmail.com
 $afePac32025
 vpqo hufr cetl bord
+
+Example ussage:
+send_email("This is a test", "keegan.pham@slu.edu")
 '''
