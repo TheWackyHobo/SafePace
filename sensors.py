@@ -1,6 +1,8 @@
 import smbus2
 import time
 from motors import motor
+from camera import record_video
+from button_no_edge import was_button_pressed
 
 i2c_bus_number = 1  
 left = 0x71
@@ -10,7 +12,8 @@ sensors = [left, right, back]
 command_reg = 0x00  
 distance_high_reg = 0x02  # High byte of the distance result
 distance_low_reg = 0x03  # Low byte of the distance result
-
+check = False
+camera_check = 0
 def read_distance(bus, sensor_address):
     try:
         # Write the command to initiate ranging in inches
@@ -29,14 +32,24 @@ def read_distance(bus, sensor_address):
 
 with smbus2.SMBus(i2c_bus_number) as bus:
     while True:
+        check = False
+        camera_check = 0
         for sensor in sensors:  # Loop through each sensor in the array
+            check = was_button_pressed()
             distance = read_distance(bus, sensor) 
             if distance is None:
                 print(f"Skipping sensor at {hex(sensor)} due to error")
-                continue  # Explicitly move to the next sensor
+                continue  # Explicitly move to the next sensorcode
 
             if 7 < distance < 84:
                 print(f"Sensor at {hex(sensor)}: {distance:.2f} inches")
+                camera_check = 1
                 motor(distance, sensor)
 
-            time.sleep(0.05)  # Small delay to avoid excessive bus usage
+        if(check == True):
+            print("ahhhhhh, scary mode")
+        else:
+            print("safe")
+        if(camera_check ==1):
+            record_video()
+        time.sleep(0.05)  # Small delay to avoid excessive bus usage
