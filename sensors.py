@@ -5,6 +5,7 @@ from camera import record_video
 from button_no_edge import was_button_pressed
 from sms import send_email
 from light import light
+from siren import beep
 i2c_bus_number = 1  
 left = 0x71
 right = 0x72
@@ -55,7 +56,8 @@ with smbus2.SMBus(i2c_bus_number) as bus:
         if(check == True):
             print("ahhhhhh, scary mode")
             send_email("helppppp","jason.nguyen.1@slu.edu" )
-            light()
+            #light()
+            beep()
         else:
             print("safe")
         if(camera_check ==1):
