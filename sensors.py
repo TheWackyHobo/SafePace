@@ -4,6 +4,7 @@ from motors import motor
 from camera import record_video
 from button_no_edge import was_button_pressed
 from sms import send_email
+from light import light
 i2c_bus_number = 1  
 left = 0x71
 right = 0x72
@@ -49,10 +50,12 @@ with smbus2.SMBus(i2c_bus_number) as bus:
                 print(f"Sensor at {hex(sensor)}: {distance:.2f} inches")
                 camera_check = 1
                 motor(distance, sensor)
+                
 
         if(check == True):
             print("ahhhhhh, scary mode")
             send_email("helppppp","jason.nguyen.1@slu.edu" )
+            light()
         else:
             print("safe")
         if(camera_check ==1):
