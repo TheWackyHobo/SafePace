@@ -6,7 +6,7 @@ def beep():
     try:
         beep = 0
         BUZZER_PIN = 4  # Any GPIO pin (example: GPIO 4, Pin 7)
-        FREQ = 1000  # Frequency in Hz
+        FREQ = 2000  # Frequency in Hz
         PERIOD = 1.0 / FREQ  # Time per cycle (T = 1/f)
         HALF_PERIOD = PERIOD / 2  # Half cycle for square wave
 
@@ -28,12 +28,12 @@ def beep():
                 time.sleep(HALF_PERIOD)  # Wait half-period
                 GPIO.output(BUZZER_PIN, GPIO.LOW)   # OFF
                 time.sleep(HALF_PERIOD)  # Wait half-period
-            if (beep == 3):
+            if (beep == 8):
                 break
     except KeyboardInterrupt:
         pass  # Stop on CTRL+C
 
-    GPIO.cleanup()  # Reset GPIOs 
+    #GPIO.cleanup()  # Reset GPIOs 
 
 # def main():
 #     beep()

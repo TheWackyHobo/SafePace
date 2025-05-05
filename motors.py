@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIOpin = 12
+GPIOpin = 13
 dutyCycle = 0
-gpiopin_left = 13
-gpio_right = 5
+gpiopin_left = 5
+gpio_right = 12
 
 # set pin assignment mode
 GPIO.setmode(GPIO.BCM)
